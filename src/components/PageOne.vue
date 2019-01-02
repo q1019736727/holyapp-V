@@ -1,15 +1,9 @@
 <template>
   <div>
-    <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
-      <!-- slides -->
-      <swiper-slide>I'm Slide 1</swiper-slide>
-      <swiper-slide>I'm Slide 2</swiper-slide>
-      <swiper-slide>I'm Slide 3</swiper-slide>
-      <swiper-slide>I'm Slide 4</swiper-slide>
-      <swiper-slide>I'm Slide 5</swiper-slide>
-      <swiper-slide>I'm Slide 6</swiper-slide>
-      <swiper-slide>I'm Slide 7</swiper-slide>
-      <div class="swiper-pagination"  slot="pagination"></div>
+    <swiper :options="swiperOption"  @someSwiperEvent="callback">
+      <swiper-slide v-for="item in imgList">
+        <img :src="item">
+      </swiper-slide>
     </swiper>
   </div>
     
@@ -22,26 +16,29 @@
       name: "PageOne",
       data() {
         return {
+          imgList:[
+            'http://pjv07e7aa.bkt.clouddn.com/%20Memories.jpeg',
+            'http://pjv07e7aa.bkt.clouddn.com/LetMeLoveYou.jpeg',
+            'http://pjv07e7aa.bkt.clouddn.com/RatherBe.jpeg',
+            'http://pjv07e7aa.bkt.clouddn.com/SkinTight.jpeg',
+            'http://pjv07e7aa.bkt.clouddn.com/yiwai.jpeg'
+          ],
           swiperOption: {
-            // some swiper options/callbacks
-            // 所有的参数同 swiper 官方 api 参数
-            // ...
+            autoplay: 3000,
+            speed: 1000,
+            loop: true, // 循环模式选项
           }
         }
       },
       methods:{
-        callback(){
-
+        callback(value){
+          alert(value)
         }
       },
       mounted:function () {
-        this.swiper.slideTo(0, 1000, false)
 
       },
       computed: {
-        swiper() {
-          return this.$refs.mySwiper.swiper
-        }
       },
       components: {
         swiper,
@@ -53,5 +50,12 @@
 <style lang="scss" scoped>
   .swiper-container {
     height: 300px;
+    img{
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+    }
   }
 </style>
