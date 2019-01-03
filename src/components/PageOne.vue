@@ -2,7 +2,7 @@
   <div>
     <swiper :options="swiperOption"  @someSwiperEvent="callback">
       <swiper-slide v-for="item in imgList">
-        <img :src="item">
+        <img :src="item.src">
       </swiper-slide>
     </swiper>
   </div>
@@ -17,11 +17,11 @@
       data() {
         return {
           imgList:[
-            'http://pjv07e7aa.bkt.clouddn.com/%20Memories.jpeg',
-            'http://pjv07e7aa.bkt.clouddn.com/LetMeLoveYou.jpeg',
-            'http://pjv07e7aa.bkt.clouddn.com/RatherBe.jpeg',
-            'http://pjv07e7aa.bkt.clouddn.com/SkinTight.jpeg',
-            'http://pjv07e7aa.bkt.clouddn.com/yiwai.jpeg'
+            {src:'http://pjv07e7aa.bkt.clouddn.com/%20Memories.jpeg'},
+            {src:'http://pjv07e7aa.bkt.clouddn.com/LetMeLoveYou.jpeg'},
+            {src:'http://pjv07e7aa.bkt.clouddn.com/RatherBe.jpeg'},
+            {src:'http://pjv07e7aa.bkt.clouddn.com/SkinTight.jpeg'},
+            {src:'http://pjv07e7aa.bkt.clouddn.com/yiwai.jpeg'}
           ],
           swiperOption: {
             autoplay: 3000,

@@ -17,8 +17,7 @@
     },
     methods:{
       changeItem(value){
-        console.log('asdasdasdasd')
-        alert(value)
+
       }
     },
     beforeMount(){
