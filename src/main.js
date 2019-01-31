@@ -4,13 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Mint from 'mint-ui';
+import axios from 'axios'
 import 'mint-ui/lib/style.css'
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
+
 Vue.use(Mint);
 Vue.config.productionTip = false
+Vue.prototype.$http = axios
 
 
 /* eslint-disable no-new */
