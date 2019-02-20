@@ -2,7 +2,7 @@
   <div>
     <swiper :options="swiperOption" @someSwiperEvent="callback">
       <swiper-slide v-for="item in imgList">
-        <img :src="item.src">
+        <img :src="item.imgUrl">
       </swiper-slide>
     </swiper>
   </div>
@@ -16,13 +16,7 @@
     name: "PageOne",
     data() {
       return {
-        imgList: [
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/%20Memories.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/LetMeLoveYou.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/RatherBe.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/SkinTight.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/yiwai.jpeg'}
-        ],
+        imgList: [],
         swiperOption: {
           autoplay: 3000,
           speed: 1000,
@@ -41,6 +35,7 @@
       })
         .then(res => {
          console.log(res)
+          this.imgList = res.data.rows
         })
     },
     methods: {
