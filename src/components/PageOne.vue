@@ -1,6 +1,11 @@
 <template>
   <div class="page">
-    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded">
+    <mt-loadmore
+      :top-method="loadTop"
+      :bottom-method="loadBottom"
+      :bottom-all-loaded="allLoaded"
+      @top-status-change="handleTopChange"
+      :top-status.sync="topStatus">
       <swiper :options="swiperOption" @someSwiperEvent="callback">
         <swiper-slide v-for="item in imgList">
           <img :src="item.imgUrl">
@@ -14,6 +19,10 @@
           </li>
         </ul>
       </main>
+      <div slot="top" class="mint-loadmore-top">
+        <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+        <span v-show="topStatus === 'loading'">加载中...</span>
+      </div>
     </mt-loadmore>
   </div>
 
@@ -28,6 +37,8 @@
       return {
         imgList: [],
         activityList:[],
+        allLoaded:false,
+        topStatus:'',
         swiperOption: {
           autoplay: 3000,
           speed: 1000,
@@ -36,7 +47,7 @@
       }
     },
     created() {
-      this.$http.get('http://192.168.5.68:3000/api/bannerCon/bannerShow', {
+      this.$http.get('http://192.168.0.107:3000/api/bannerCon/bannerShow', {
         params:{
           deviceType:2,
           projectId:6,
@@ -47,7 +58,7 @@
           this.imgList = res.data.rows
         })
 
-      this.$http.get('http://192.168.5.68:3000/api/travel/travelActList',{
+      this.$http.get('http://192.168.0.107:3000/api/travel/travelActList',{
         params:{
           pageNum:1,
           pageSize:10,
@@ -63,13 +74,13 @@
       callback(value) {
 
       },
+      handleTopChange(status) {
+        this.topStatus = status;
+      },
       loadBottom(){
       },
-      allLoaded(){
-
-      },
       loadTop(){
-
+        // this.topStatus = 'loading'
       }
 
     },
@@ -79,7 +90,8 @@
     computed: {},
     components: {
       swiper,
-      swiperSlide
+      swiperSlide,
+      Loadmore
     }
   }
 </script>
@@ -87,6 +99,7 @@
 <style lang="scss" scoped>
   $wid:calc(100% - 30px);
   .page{
+    overflow:scroll;
     padding-bottom: 51px;
     .swiper-container {
       height: 230px;
