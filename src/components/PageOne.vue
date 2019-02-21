@@ -1,25 +1,27 @@
 <template>
   <div class="page">
-    <swiper :options="swiperOption" @someSwiperEvent="callback">
-      <swiper-slide v-for="item in imgList">
-        <img :src="item.imgUrl">
-      </swiper-slide>
-    </swiper>
-    <main class="activitylist">
-      <ul class="list-wrapper">
-        <li v-for="item in activityList">
-          <img :src="item.url" alt="" >
-          <h5>{{item.name}}</h5>
-        </li>
-      </ul>
-    </main>
+    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded">
+      <swiper :options="swiperOption" @someSwiperEvent="callback">
+        <swiper-slide v-for="item in imgList">
+          <img :src="item.imgUrl">
+        </swiper-slide>
+      </swiper>
+      <main class="activitylist">
+        <ul class="list-wrapper">
+          <li v-for="item in activityList">
+            <img :src="item.url" alt="" >
+            <h5>{{item.name}}</h5>
+          </li>
+        </ul>
+      </main>
+    </mt-loadmore>
   </div>
 
 </template>
 
 <script>
-  import {swiper, swiperSlide} from 'vue-awesome-swiper'
-
+  import {swiper, swiperSlide} from 'vue-awesome-swiper';
+  import {Loadmore} from 'mint-ui'
   export default {
     name: "PageOne",
     data() {
@@ -59,8 +61,17 @@
     },
     methods: {
       callback(value) {
-        alert(value)
+
+      },
+      loadBottom(){
+      },
+      allLoaded(){
+
+      },
+      loadTop(){
+
       }
+
     },
     mounted: function () {
 
