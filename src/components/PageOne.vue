@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page">
     <swiper :options="swiperOption" @someSwiperEvent="callback">
       <swiper-slide v-for="item in imgList">
         <img :src="item.imgUrl">
@@ -8,8 +8,8 @@
     <main class="activitylist">
       <ul class="list-wrapper">
         <li v-for="item in activityList">
-          <img :src="item.url" alt="">
-
+          <img :src="item.url" alt="" >
+          <h5>{{item.name}}</h5>
         </li>
       </ul>
     </main>
@@ -74,25 +74,36 @@
 </script>
 
 <style lang="scss" scoped>
-  .swiper-container {
-    height: 230px;
-    img {
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+  $wid:calc(100% - 30px);
+  .page{
+    padding-bottom: 51px;
+    .swiper-container {
+      height: 230px;
+      img {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
 
-    }
-  }
-  .activitylist{
-    .list-wrapper{
-      li{
-        padding-top: 10px;
-        img{
-          width: 100%;
-        }
       }
     }
+    .activitylist{
+      .list-wrapper{
+        li{
+          padding-top: 15px;
+          img{
+            width: $wid;
+            height: 200px;
+            padding-left: 15px;
+            padding-right: 15px;
+          }
+          h5{
+            padding-left: 15px;
+            padding-right: 15px;
+          }
+        }
+      }
 
+    }
   }
 </style>
