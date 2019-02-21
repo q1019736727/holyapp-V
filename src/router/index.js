@@ -4,6 +4,8 @@ import Tabbars from '../components/TabarBottom'
 import Topheader from '../components/topheader'
 import One from '../components/PageOne'
 import Two from '../components/PageTwo'
+import Three from '../components/PageThree'
+import Four from '../components/PageFour'
 //引入vux的默认样式
 import 'vux/src/styles/reset.less'
 Vue.use(Router)
@@ -17,7 +19,9 @@ export default new Router({
         main:Tabbars,
         top:Topheader,
         one:One,//首页
-        two:Two//管家
+        two:Two,//管家
+        three:Three,//活动
+        four:Four//我的
       }
     }
   ]

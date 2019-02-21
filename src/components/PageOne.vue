@@ -2,9 +2,17 @@
   <div>
     <swiper :options="swiperOption" @someSwiperEvent="callback">
       <swiper-slide v-for="item in imgList">
-        <img :src="item.src">
+        <img :src="item.imgUrl">
       </swiper-slide>
     </swiper>
+    <main class="activitylist">
+      <ul class="list-wrapper">
+        <li v-for="item in activityList">
+          <img :src="item.url" alt="">
+
+        </li>
+      </ul>
+    </main>
   </div>
 
 </template>
@@ -16,13 +24,8 @@
     name: "PageOne",
     data() {
       return {
-        imgList: [
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/%20Memories.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/LetMeLoveYou.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/RatherBe.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/SkinTight.jpeg'},
-          {src: 'http://pjv07e7aa.bkt.clouddn.com/yiwai.jpeg'}
-        ],
+        imgList: [],
+        activityList:[],
         swiperOption: {
           autoplay: 3000,
           speed: 1000,
@@ -31,17 +34,28 @@
       }
     },
     created() {
-      this.$http.get('http://127.0.0.1:3000/api/bannerCon/bannerShow', {
+      this.$http.get('http://192.168.5.68:3000/api/bannerCon/bannerShow', {
         params:{
           deviceType:2,
           projectId:6,
           imgType:0,
           pixel: 750
         }
-      })
-        .then(res => {
-         console.log(res)
+      }).then(res => {
+          this.imgList = res.data.rows
         })
+
+      this.$http.get('http://192.168.5.68:3000/api/travel/travelActList',{
+        params:{
+          pageNum:1,
+          pageSize:10,
+          status:2,
+          status1:3,
+          status2:4
+        }
+      }).then(res=>{
+        this.activityList = res.data.rows
+      })
     },
     methods: {
       callback(value) {
@@ -61,7 +75,7 @@
 
 <style lang="scss" scoped>
   .swiper-container {
-    height: 300px;
+    height: 230px;
     img {
       display: inline-block;
       width: 100%;
@@ -69,5 +83,16 @@
       object-fit: cover;
 
     }
+  }
+  .activitylist{
+    .list-wrapper{
+      li{
+        padding-top: 10px;
+        img{
+          width: 100%;
+        }
+      }
+    }
+
   }
 </style>
