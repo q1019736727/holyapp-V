@@ -1,7 +1,7 @@
 <template>
-    <div class="menu">
+    <div class="menu-list">
       <span v-for="(title,index) in menuList">
-        <img :src="'../../../static/'+imgList[index]" alt="">
+        <img :src="'static/'+imgList[index]" alt="">
         {{title}}
       </span>
     </div>
@@ -9,7 +9,7 @@
 
 <script>
     export default {
-      name: "menu",
+      name: "homemenu",
       data(){
         return{
           menuList:['物业保修','在线缴费','访客邀请','投诉建议'],
@@ -20,7 +20,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .menu{
+  .menu-list{
     display: flex;
     justify-content: space-around;
     align-items: center;

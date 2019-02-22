@@ -44,6 +44,8 @@
   *{
     padding: 0;
     margin: 0;
+    color: inherit;
+    list-style: none;
   }
 #app {
 

@@ -9,23 +9,25 @@
         <img :src="item.imgUrl">
       </swiper-slide>
     </swiper>
-    <Menu></Menu>
+    <homemenu></homemenu>
     <main class="activitylist">
       <ul class="list-wrapper">
-        <li v-for="item in activityList" :key="item.id">
-          <img v-lazy="item.url" alt="" >
-          <h5>{{item.name}}</h5>
-          <div class="bottom-info">
-            <span class="left-info">
-              <h5>{{item | priceFliter}}</h5>
-              <p>{{item | timeFilter}}</p>
-            </span>
-            <span class="right-info">
-              <p>{{item.applyNum}}人已报名</p>
-              <h5>报名已结束</h5>
-            </span>
-          </div>
-        </li>
+        <router-link :to="{name:'detail'}">
+          <li v-for="item in activityList" :key="item.id">
+              <img v-lazy="item.url" alt="" >
+              <h5>{{item.name}}</h5>
+              <div class="bottom-info">
+              <span class="left-info">
+                <h5>{{item | priceFliter}}</h5>
+                <p>{{item | timeFilter}}</p>
+              </span>
+                <span class="right-info">
+                <p>{{item.applyNum}}人已报名</p>
+                <h5>报名已结束</h5>
+              </span>
+              </div>
+          </li>
+        </router-link>
       </ul>
 
       <!--显示加载中转菊花-->
@@ -43,7 +45,7 @@
 
 <script>
   import Vue from 'vue'
-  import Menu from './homecomponents/menu'
+  import homemenu from './homecomponents/homemenu'
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
   import {Loadmore,InfiniteScroll,Spinner,Lazyload} from 'mint-ui'
   import tool from '@/tools/tool.js'
@@ -144,7 +146,7 @@
     },
     computed: {},
     components: {
-      Menu,
+      homemenu,
       swiper,
       swiperSlide,
       Loadmore,

@@ -28,6 +28,7 @@ const webpackConfig = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'static': path.join(__dirname,'../static'),
     }
   },
   module: {
