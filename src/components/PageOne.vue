@@ -1,44 +1,62 @@
 <template>
-  <div class="page">
-    <mt-loadmore
-      :top-method="loadTop"
-      :bottom-method="loadBottom"
-      :bottom-all-loaded="allLoaded"
-      @top-status-change="handleTopChange"
-      :top-status.sync="topStatus">
-      <swiper :options="swiperOption" @someSwiperEvent="callback">
-        <swiper-slide v-for="item in imgList">
-          <img :src="item.imgUrl">
-        </swiper-slide>
-      </swiper>
-      <main class="activitylist">
-        <ul class="list-wrapper">
-          <li v-for="item in activityList">
-            <img :src="item.url" alt="" >
-            <h5>{{item.name}}</h5>
-          </li>
-        </ul>
-      </main>
-      <div slot="top" class="mint-loadmore-top">
-        <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-        <span v-show="topStatus === 'loading'">加载中...</span>
+  <!--使用InfiniteScroll必须在外层满屏上-->
+  <div class="page"
+       v-infinite-scroll="loadMore"
+       infinite-scroll-disabled="loading"
+       infinite-scroll-distance="10">
+    <swiper :options="swiperOption" @someSwiperEvent="callback">
+      <swiper-slide v-for="item in imgList">
+        <img :src="item.imgUrl">
+      </swiper-slide>
+    </swiper>
+    <Menu></Menu>
+    <main class="activitylist">
+      <ul class="list-wrapper">
+        <li v-for="item in activityList" :key="item.id">
+          <img v-lazy="item.url" alt="" >
+          <h5>{{item.name}}</h5>
+          <div class="bottom-info">
+            <span class="left-info">
+              <h5>{{item | priceFliter}}</h5>
+              <p>{{item | timeFilter}}</p>
+            </span>
+            <span class="right-info">
+              <p>{{item.applyNum}}人已报名</p>
+              <h5>报名已结束</h5>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <!--显示加载中转菊花-->
+      <div class="loading-box" v-if="loading&&!noMore">
+        <mt-spinner type="snake" :size="15" class="loading-more"></mt-spinner>
+        <span class="loading-more-txt">加载中...</span>
       </div>
-    </mt-loadmore>
+
+      <div class="no-more" v-if="noMore">没有更多了~</div>
+
+    </main>
   </div>
 
 </template>
 
 <script>
+  import Vue from 'vue'
+  import Menu from './homecomponents/menu'
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
-  import {Loadmore} from 'mint-ui'
+  import {Loadmore,InfiniteScroll,Spinner,Lazyload} from 'mint-ui'
+  import tool from '@/tools/tool.js'
+  Vue.use(InfiniteScroll,Lazyload)
   export default {
     name: "PageOne",
     data() {
       return {
         imgList: [],
         activityList:[],
-        allLoaded:false,
-        topStatus:'',
+        loading:false,
+        noMore:false,
+        pageNum:0,
         swiperOption: {
           autoplay: 3000,
           speed: 1000,
@@ -47,7 +65,7 @@
       }
     },
     created() {
-      this.$http.get('http://192.168.0.107:3000/api/bannerCon/bannerShow', {
+      this.$http.get('http://192.168.5.68:3000/api/bannerCon/bannerShow', {
         params:{
           deviceType:2,
           projectId:6,
@@ -57,49 +75,92 @@
       }).then(res => {
           this.imgList = res.data.rows
         })
-
-      this.$http.get('http://192.168.0.107:3000/api/travel/travelActList',{
-        params:{
-          pageNum:1,
-          pageSize:10,
-          status:2,
-          status1:3,
-          status2:4
-        }
-      }).then(res=>{
-        this.activityList = res.data.rows
-      })
     },
     methods: {
       callback(value) {
 
       },
-      handleTopChange(status) {
-        this.topStatus = status;
+
+      loadMore() {
+        this.loading = true;
+        this.loadData()
       },
-      loadBottom(){
-      },
-      loadTop(){
-        // this.topStatus = 'loading'
+
+      loadData(){
+        this.$http.get('http://192.168.5.68:3000/api/travel/travelActList',{
+          params:{
+            pageNum:this.pageNum+1,
+            pageSize:10,
+            status:2,
+            status1:3,
+            status2:4
+          }
+        }).then(res=>{
+          this.loading = false;
+          this.pageNum = this.pageNum+1
+          if (this.activityList.length === 0){
+              this.activityList = res.data.rows
+          } else{
+            this.activityList = this.activityList.concat(res.data.rows)
+          }
+          if (res.data.rows.length < 10){
+            this.loading = true
+            this.noMore = true
+          }
+        })
       }
 
     },
     mounted: function () {
 
     },
+    filters:{
+      priceFliter:function (item) {
+        var adult
+        var child
+        if (item.priceAdult){
+          adult = tool.float2f(item.priceAdult)
+        }
+        if (item.priceChild){
+          child = tool.float2f(item.priceChild)
+        }
+        if (adult && child){
+          if (adult>child) {
+            return '¥'+child+'-'+'¥'+adult+'/人'
+          }else{
+            return '¥'+adult+'-'+'¥'+child+'/人'
+          }
+        }else if (adult && !child){
+          return '¥'+adult+'/人'
+        }else if (!adult && child){
+          return '¥'+child+'/人'
+        }
+      },
+      timeFilter:function (item) {
+        let startTime =  item.applyStarTime.substring(0,10)
+        let endTime =  item.applyEndTime.substring(0,10)
+        return startTime.replace(/-/g,'.') + '-' + endTime.replace(/-/g,'.')
+      }
+    },
     computed: {},
     components: {
+      Menu,
       swiper,
       swiperSlide,
-      Loadmore
+      Loadmore,
+      InfiniteScroll,
+      Spinner,
+      Lazyload
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import "@/style/common.scss";
   $wid:calc(100% - 30px);
   .page{
-    overflow:scroll;
+    overflow:auto;
+    height: calc(100vh - 51px);
     padding-bottom: 51px;
     .swiper-container {
       height: 230px;
@@ -108,22 +169,74 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-
       }
     }
     .activitylist{
+      // 加载中。。。
+      .loading-box{
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .loading-more{
+          display:inline-block;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+        .loading-more-txt{
+          vertical-align: middle;
+          font-size:12px;
+        }
+      }
+
+      .no-more {
+        font-size:12px;
+        text-align: center;
+        height: 30px;
+      }
+
       .list-wrapper{
         li{
           padding-top: 15px;
+          padding-bottom: 10px;
           img{
             width: $wid;
             height: 200px;
             padding-left: 15px;
             padding-right: 15px;
           }
-          h5{
+          &>h5{
             padding-left: 15px;
             padding-right: 15px;
+          }
+          .bottom-info{
+            padding-left: 15px;
+            padding-right: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .left-info{
+              &>h5{
+                color: red;
+              }
+              &>p{
+                color: #999999;
+                font-size: 12px;
+              }
+            }
+            .right-info{
+              background-color: $main_color;
+              border-radius: 5px;
+              padding: 2px 5px;
+               p{
+                 font-size: 11px;
+                 text-align: center;
+                 color: #eee;
+               }
+              h5{
+                color: white;
+              }
+            }
           }
         }
       }

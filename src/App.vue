@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view :name="pagename"></router-view>
+    <div>
+      <router-view :name="pagename"></router-view>
+    </div>
     <router-view name="main" class="bottomBar"></router-view>
   </div>
 </template>
@@ -31,7 +33,6 @@
         } else if(value === 3){
           this.pagename = 'four'
         }
-
       })
     }
 
@@ -39,6 +40,11 @@
 </script>
 
 <style lang="scss">
+  html,body{-webkit-overflow-scrolling: touch;}
+  *{
+    padding: 0;
+    margin: 0;
+  }
 #app {
 
 }

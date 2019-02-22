@@ -7,8 +7,7 @@ import Mint from 'mint-ui';
 import axios from 'axios'
 import 'mint-ui/lib/style.css'
 import 'swiper/dist/css/swiper.min.css'
-import Swiper from 'swiper'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
+
 
 
 Vue.use(Mint);
