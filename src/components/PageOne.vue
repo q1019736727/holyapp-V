@@ -12,22 +12,22 @@
     <homemenu></homemenu>
     <main class="activitylist">
       <ul class="list-wrapper">
-        <router-link :to="{name:'detail'}">
           <li v-for="item in activityList" :key="item.id">
+            <router-link :to="{name:'detail',query:{id:item.id}}">
               <img v-lazy="item.url" alt="" >
-              <h5>{{item.name}}</h5>
-              <div class="bottom-info">
-              <span class="left-info">
-                <h5>{{item | priceFliter}}</h5>
-                <p>{{item | timeFilter}}</p>
-              </span>
-                <span class="right-info">
-                <p>{{item.applyNum}}人已报名</p>
-                <h5>报名已结束</h5>
-              </span>
-              </div>
+                <h5>{{item.name}}</h5>
+                <div class="bottom-info">
+                <span class="left-info">
+                  <h5>{{item | priceFliter}}</h5>
+                  <p>{{item | timeFilter}}</p>
+                </span>
+                  <span class="right-info">
+                  <p>{{item.applyNum}}人已报名</p>
+                  <h5>报名已结束</h5>
+                </span>
+                </div>
+            </router-link>
           </li>
-        </router-link>
       </ul>
 
       <!--显示加载中转菊花-->
@@ -67,7 +67,7 @@
       }
     },
     beforeMount() {
-      this.$http.get('http://192.168.0.105:3000/api/bannerCon/bannerShow', {
+      this.$http.get('http://192.168.0.108:3000/api/bannerCon/bannerShow', {
         params:{
           deviceType:2,
           projectId:6,
@@ -89,7 +89,7 @@
       },
 
       loadData(){
-        this.$http.get('http://192.168.0.105:3000/api/travel/travelActList',{
+        this.$http.get('http://192.168.0.108:3000/api/travel/travelActList',{
           params:{
             pageNum:this.pageNum+1,
             pageSize:10,
@@ -207,7 +207,7 @@
             padding-left: 15px;
             padding-right: 15px;
           }
-          &>h5{
+          &>a>h5{
             padding-left: 15px;
             padding-right: 15px;
           }

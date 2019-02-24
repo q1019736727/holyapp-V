@@ -30,9 +30,9 @@
     },
     methods:{
         loadData(){
-          this.$http.get('http://192.168.0.105:3000/api/travel/travelAct',{
+          this.$http.get('http://192.168.0.108:3000/api/travel/travelAct',{
             params:{
-              id:42
+              id:this.$route.query.id
             }
           }).then(res => {
             console.log(res)
