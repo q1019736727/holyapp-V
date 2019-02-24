@@ -3497,6 +3497,13 @@ image-size@~0.5.0:
   resolved "http://registry.npm.taobao.org/image-size/download/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
 
+img-vuer@^0.15.6:
+  version "0.15.6"
+  resolved "http://registry.npm.taobao.org/img-vuer/download/img-vuer-0.15.6.tgz#7d9c8001d0df2f552cbf49b4c3e91ba33759dd31"
+  integrity sha1-fZyAAdDfL1Usv0m0w+kbozdZ3TE=
+  dependencies:
+    v-finger-mk42 "^1.0.11"
+
 import-cwd@^2.0.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/import-cwd/download/import-cwd-2.1.0.tgz#aa6cf36e722761285cb371ec6519f53e2435b0a9"
@@ -7215,6 +7222,11 @@ uuid@^3.0.0, uuid@^3.0.1, uuid@^3.3.2:
   version "3.3.2"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha1-G0r0lV6zB3xQHCOHL8ZROBFYcTE=
+
+v-finger-mk42@^1.0.11:
+  version "1.0.11"
+  resolved "http://registry.npm.taobao.org/v-finger-mk42/download/v-finger-mk42-1.0.11.tgz#aeb60a30cee0abe27714fd487507906c55aed944"
+  integrity sha1-rrYKMM7gq+J3FP1IdQeQbFWu2UQ=
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"

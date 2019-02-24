@@ -66,8 +66,8 @@
         }
       }
     },
-    created() {
-      this.$http.get('http://192.168.5.68:3000/api/bannerCon/bannerShow', {
+    beforeMount() {
+      this.$http.get('http://192.168.0.105:3000/api/bannerCon/bannerShow', {
         params:{
           deviceType:2,
           projectId:6,
@@ -89,7 +89,7 @@
       },
 
       loadData(){
-        this.$http.get('http://192.168.5.68:3000/api/travel/travelActList',{
+        this.$http.get('http://192.168.0.105:3000/api/travel/travelActList',{
           params:{
             pageNum:this.pageNum+1,
             pageSize:10,
