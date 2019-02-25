@@ -51,6 +51,7 @@
   import {Loadmore, InfiniteScroll, Spinner, Lazyload} from 'mint-ui'
   import tool from '@/tools/tool.js'
   import netrequest from '@/tools/netRequest.js'
+  import { Loading } from 'vux'
 
   Vue.use(InfiniteScroll, Lazyload)
   export default {
@@ -187,7 +188,8 @@
       Loadmore,
       InfiniteScroll,
       Spinner,
-      Lazyload
+      Lazyload,
+      Loading
     }
   }
 </script>
