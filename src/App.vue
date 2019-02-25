@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div>
-      <router-view :name="pagename"></router-view>
+      <keep-alive>
+        <router-view :name="pagename"></router-view>
+      </keep-alive>
     </div>
     <router-view name="main" class="bottomBar"></router-view>
   </div>

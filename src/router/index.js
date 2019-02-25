@@ -15,7 +15,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Tabbars',
+      name: 'homeRt',
       components: {
         main:Tabbars,
         top:Topheader,
