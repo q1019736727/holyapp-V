@@ -15,13 +15,16 @@
       </div>
       <div class="line"></div>
       <div class="time">
-        <span><img src="static/ico_list_activity.png" alt=""></span>
+        <span><img src="static/ico_travel_shop.png" alt=""></span>
         <span class="time-lab">{{this.activityInfo.optional.companyName}}</span>
       </div>
       <div class="boldline"></div>
-      <p class="detail-title">商品介绍</p>
+      <p v-if="this.activityInfo.optional.richType === 1" class="detail-title">商品介绍</p>
     </div>
-    <div class="rich-wrapper" v-html="richtext"></div>
+    <div v-if="this.activityInfo.optional.richType === 1" class="rich-wrapper" v-html="richtext"></div>
+    <div v-else class="text-wrapper">
+      <activity-segment></activity-segment>
+    </div>
   </div>
 </template>
 
@@ -31,6 +34,7 @@
   import Vue from 'vue'
   import tool from '@/tools/tool.js'
   import netrequest from '@/tools/netRequest.js'
+  import activitySegment from './activitycomponents/activitySegment'
 
   Vue.component(Swipe.name, Swipe);
   Vue.component(SwipeItem.name, SwipeItem);
@@ -45,6 +49,9 @@
         richtext: '',
         activityInfo: {},
       }
+    },
+    components:{
+      activitySegment
     },
     beforeCreate() {
       if (!this.$route.query.id) {
