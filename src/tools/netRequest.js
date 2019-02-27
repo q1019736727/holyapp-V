@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-const host_url = 'http://192.168.5.68:3000'
+const host_url = 'http://192.168.0.111:3000'
 
 const request = {
   homeBanner: function (params) {

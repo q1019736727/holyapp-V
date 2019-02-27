@@ -5,7 +5,7 @@
         <router-view :name="pagename"></router-view>
       </keep-alive>
     </div>
-    <router-view name="main" class="bottomBar"></router-view>
+    <router-view name="main"></router-view>
   </div>
 </template>
 

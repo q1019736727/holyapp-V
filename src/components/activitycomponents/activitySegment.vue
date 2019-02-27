@@ -26,7 +26,9 @@
   .menu{
     display: flex;
     justify-content: space-around;
-    padding-top: 3px;
+    padding-top: 13px;
+    padding-bottom: 10px;
+    width: 100%;
     >span{
       text-align: center;
       font-size: 14px;

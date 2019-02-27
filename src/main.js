@@ -8,12 +8,14 @@ import axios from 'axios'
 import 'mint-ui/lib/style.css'
 import 'swiper/dist/css/swiper.min.css'
 import  { LoadingPlugin,Loading } from 'vux'
+import vconsole from 'vconsole'
 
 Vue.use(LoadingPlugin)
 Vue.use(Mint);
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.component('loading', Loading)
+Vue.prototype.vConsole = new vconsole()
 
 /* eslint-disable no-new */
 new Vue({
