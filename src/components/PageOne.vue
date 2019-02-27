@@ -251,9 +251,11 @@
           }
           img {
             width: $wid;
-            height: 200px;
-            padding-left: 15px;
-            padding-right: 15px;
+            height: (100% * (9/16));
+            border-radius: 5px;
+            margin-left: 15px;
+            margin-right: 15px;
+            background-size: cover;
           }
           & > a > h5 {
             padding-left: 15px;
