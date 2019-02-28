@@ -23,8 +23,34 @@
     </div>
     <div v-if="this.activityInfo.optional.richType === 1" class="rich-wrapper" v-html="richtext"></div>
     <div v-else class="text-wrapper">
-      <activity-segment  :class="{segment:true,fixed:fixedClass}"></activity-segment>
-      <div class="ruleList" style="height: 1000px"></div>
+      <activity-segment :class="{segment:true,fixed:fixedClass}"></activity-segment>
+      <div class="tripRuleList">
+        <div class="tripRule">
+          <section class="tripRule-right" v-for="item in this.activityInfo.optional.journeyList">
+            <section class="tripRule-left">
+              <div class="tripline">
+                <div class="circle"></div>
+                <div class="line"></div>
+                <div class="circle"></div>
+              </div>
+            </section>
+            <div class="liWrapper">
+              <li v-for="(title,index) in tripTitles">
+                <img :src="tripImgs[index]" alt="">
+                <div class="titleInfo">
+                  <p>{{title}}</p>
+                  <span v-if="index === 0">{{item.time}}</span>
+                  <span v-else-if="index === 1">{{item.place}}</span>
+                  <span v-else-if="index === 2">{{item.vehicle}}</span>
+                  <span v-else-if="index === 3">{{item.stay}}</span>
+                  <span v-else-if="index === 4">{{item.food}}</span>
+                  <span v-else>{{item.content}}</span>
+                </div>
+              </li>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +72,13 @@
     name: "ActivityDetail",
     data() {
       return {
+        tripTitles: ['集合时间:', '集合地点:', '交通工具:', '住宿:', '餐饮:', '活动内容:'],
+        tripImgs: ['static/activity/ico_details_time.png',
+          'static/activity/ico_details_coord.png',
+          'static/activity/ico_details_traffic.png',
+          'static/activity/ico_details_stay.png',
+          'static/activity/ico_details_food.png',
+          'static/activity/ico_details_active.png'],
         bannerList: [],
         richtext: '',
         activityInfo: {},
@@ -70,7 +103,7 @@
       document.addEventListener('scroll', this.windscroll)
     },
     updated() {
-      if (this.segmentTop === 0){
+      if (this.segmentTop === 0) {
         this.segmentTop = this.$refs.boldlineRef.getBoundingClientRect().bottom
       }
     },
@@ -86,7 +119,6 @@
       },
       windscroll() {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        console.log(scrollTop,this.segmentTop)
         if (scrollTop >= this.segmentTop) {
           this.fixedClass = true
         } else if (scrollTop < this.segmentTop) {
@@ -213,6 +245,85 @@
     position: fixed;
     left: 0;
     top: 0;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right {
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .tripRule-left {
+    flex-basis: 70px;
+    flex-shrink: 1;
+    align-self: stretch;
+    position: relative;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .tripRule-left .tripline {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .tripRule-left .tripline  .circle:first-child{
+    background: #ccc;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 10px;
+  }
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .tripRule-left .tripline  .line {
+    width: 1px;
+    flex-grow: 1;
+    background: #ccc;
+  }
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .tripRule-left .tripline  .circle:last-child{
+    background: #ccc;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .liWrapper {
+    flex-basis: 275px;
+    flex-grow: 1;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right .liWrapper > li {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-top: 10px;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right > .liWrapper > li > img {
+    margin-top: 5px;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right > .liWrapper > li > .titleInfo {
+    margin-left: 8px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right > .liWrapper > li > .titleInfo p {
+    font-size: 13px;
+    color: #444;
+    white-space: nowrap;
+  }
+
+  .detail .text-wrapper .tripRuleList .tripRule .tripRule-right > .liWrapper > li > .titleInfo span {
+    font-size: 13px;
+    color: #444;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
 </style>

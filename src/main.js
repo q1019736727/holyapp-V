@@ -7,14 +7,15 @@ import Mint from 'mint-ui';
 import axios from 'axios'
 import 'mint-ui/lib/style.css'
 import 'swiper/dist/css/swiper.min.css'
-import  { LoadingPlugin,Loading } from 'vux'
+import  { LoadingPlugin,ToastPlugin,Loading } from 'vux'
 import vconsole from 'vconsole'
 
-Vue.use(LoadingPlugin)
+Vue.use(LoadingPlugin,ToastPlugin)
 Vue.use(Mint);
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.component('loading', Loading)
+Vue.use(ToastPlugin, {position: 'center'})
 Vue.prototype.vConsole = new vconsole()
 
 /* eslint-disable no-new */

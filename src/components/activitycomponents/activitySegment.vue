@@ -29,6 +29,8 @@
     padding-top: 13px;
     padding-bottom: 10px;
     width: 100%;
+    background: white;
+    z-index: 1;
     >span{
       text-align: center;
       font-size: 14px;
