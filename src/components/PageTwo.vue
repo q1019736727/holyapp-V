@@ -1,6 +1,6 @@
 <template>
     <div>
-      two
+      管家页面
     </div>
 </template>
 
